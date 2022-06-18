@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css"> 
+  <title>Document</title>
+</head>
+<body>
+  <h1>Welcome to My Favorite Movies Page</h1>
+  <h2>You can search movies in my mind.</h2>
+  <form class="form1">
+    <select class="searchBy">
+      <option disable selected>Search by...</option>
+      <option value="title">Title</option>
+      <option value="run time">Run time</option>
+      <option value="genre">Genre</option>
+      <option value="released">Released year</option>
+      <option value="country">Country</option>
+      <option value="director">Director</option>
+    </select>
+    <select class="select" disabled>
+      <option disable selected>Select</option>
+    </select>
+    <button type="submit">Serch</button>
+  </form>
+ 
+  <h2>I recommend for you!</h2>
+  <ul type="circle" class="results">
+    
+  </ul>
+
+
+  <script type="text/javascript" src="favorite_movies.js"></script>
+</body>
+</html>
