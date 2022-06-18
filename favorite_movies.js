@@ -262,11 +262,13 @@ const movies = [
 function runTime(object) {
 if (object.time) {
   if (object.time < 60) {
-      console.log('short film');
+      return 'short film';
   } else if (object.time <= 120) {
-      console.log('not long film');
-  } else if (object.time > 120) {
-      console.log('long film');
+      return 'not so long film';
+  } else if (object.time <= 150) {
+      return 'long film';
+  } else {
+    return 'so long film';
   }
 }
 };
@@ -468,7 +470,7 @@ function setInformations(array) {
     list.classList.add('info');
     // list.innerHTML = array[x];
     list.innerHTML = 
-    `<div class="title">${array[x]["name"]}<div><br><span class="basedInfo">run time:</span> ${array[x]["time"]}min<br><span class="basedInfo">genres:</span> ${array[x]["genres"]}<br><span class="basedInfo">release:</span> ${array[x]["release"]}<br><span class="basedInfo">countries:</span> ${array[x]["countries"]}<br><span class="basedInfo">director:</span> ${array[x]["director"]}`;
+    `<div class="title">${array[x]["name"]}</div><br><span class="basedInfo">run time:</span> ${array[x]["time"]}min (${runTime(array[x])})<br><span class="basedInfo">genres:</span> ${array[x]["genres"]}<br><span class="basedInfo">release:</span> ${array[x]["release"]}<br><span class="basedInfo">countries:</span> ${array[x]["countries"]}<br><span class="basedInfo">director:</span> ${array[x]["director"]}`;
     results.appendChild(list);
   }
 }
@@ -491,12 +493,6 @@ submitButton.addEventListener('click', () => {
     }
   }
 
-  // for(let x = 0; x < movies.length; x++) {
-  //   if(movies[x][change[searchBy.value]].includes(selectOptions.value) || movies[x][change[searchBy.value]] === selectOptions.value) {
-  //     newArray.push(movies[x]);
-  //   }
-  // }
-
   if(change[searchBy.value] === "name") {
     let titleArray = title(movies);
     for(const obj of movies) {
@@ -516,6 +512,8 @@ submitButton.addEventListener('click', () => {
     for(const obj of movies) {
       if(obj["genres"] === genresArray[selectOptions.value]) {
         newArray.push(obj);
+      } else if(Array.isArray(obj["genres"]) && obj["genres"].includes(genresArray[selectOptions.value])) {
+        newArray.push(obj);
       }
     }
   } else if(change[searchBy.value] === "release") {
@@ -529,6 +527,8 @@ submitButton.addEventListener('click', () => {
     let countriesArray = country(movies);
     for(const obj of movies) {
       if(obj["countries"] === countriesArray[selectOptions.value]) {
+        newArray.push(obj);
+      } else if(Array.isArray(obj["countries"]) && obj["countries"].includes(countriesArray[selectOptions.value])) {
         newArray.push(obj);
       }
     }
