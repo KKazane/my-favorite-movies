@@ -406,6 +406,8 @@ function sortedRunTime(array) {
   return backArray;
 }
 
+console.log(sortedRunTime(movies));
+
 // ページ稼働
 const selected = {
   "title": title(movies),
@@ -417,9 +419,12 @@ const selected = {
 }
 // console.log(selected);
 const searchBy = document.querySelector(".searchBy");
+const selectOptions = document.querySelector('.select');
+const results = document.querySelector('.results');
+const submitButton = document.querySelector('.submitButton');
 
 function setOptions(selectedBy) {
-  const selectOptions = document.querySelector(".select");
+  // const selectOptions = document.querySelector(".select");
   selectOptions.disabled = false;
 
   selected[selectedBy].forEach((any, index) => {
@@ -432,7 +437,7 @@ function setOptions(selectedBy) {
 }
 
 searchBy.addEventListener('change', (e) => {
-  const selectOptions = document.querySelector(".select");
+  // const selectOptions = document.querySelector(".select");
   let children = document.querySelectorAll('.child');
   if(children.length > 0) {
     for(let i = 0; i < children.length; i++) {
@@ -441,3 +446,104 @@ searchBy.addEventListener('change', (e) => {
   }
   setOptions(e.target.value);
 })
+
+function setInformations(array) {
+  // const infoArray = [];
+  // for(let i = 0; i < movies.length; i++) {
+  //   for(const key in movies[i]) {
+  //     if(choosed === movies[i][key]) {
+  //       infoArray.push(movies[i]);
+  //     } else if(Array.isArray(movies[i][key]) && movies[i][key].includes(`${choosed}`)) {
+  //       infoArray.push(movies[i]);
+  //     }
+  //   }
+  // }
+
+  // let simpleArray = new Set(infoArray);
+  // let informationsArray = Array.from(simpleArray); 
+  
+  for(let x = 0; x < array.length; x++) {
+    const list = document.createElement('li');
+    list.value = x;
+    list.classList.add('info');
+    // list.innerHTML = array[x];
+    list.innerHTML = 
+    `<div class="title">${array[x]["name"]}<div><br><span class="basedInfo">run time:</span> ${array[x]["time"]}min<br><span class="basedInfo">genres:</span> ${array[x]["genres"]}<br><span class="basedInfo">release:</span> ${array[x]["release"]}<br><span class="basedInfo">countries:</span> ${array[x]["countries"]}<br><span class="basedInfo">director:</span> ${array[x]["director"]}`;
+    results.appendChild(list);
+  }
+}
+
+submitButton.addEventListener('click', () => {
+  let infos = document.querySelectorAll('.info');
+  const newArray = [];
+  const change = {
+    "title": "name",
+    "run time": "time",
+    "genre": "genres",
+    "released": "release",
+    "country": "countries",
+    "director": "director"
+  }
+
+  if(infos.length > 0) {
+    for(let i = 0; i < infos.length; i++) {
+      results.removeChild(infos[i]);
+    }
+  }
+
+  // for(let x = 0; x < movies.length; x++) {
+  //   if(movies[x][change[searchBy.value]].includes(selectOptions.value) || movies[x][change[searchBy.value]] === selectOptions.value) {
+  //     newArray.push(movies[x]);
+  //   }
+  // }
+
+  if(change[searchBy.value] === "name") {
+    let titleArray = title(movies);
+    for(const obj of movies) {
+      if(obj["name"] === titleArray[selectOptions.value]) {
+        newArray.push(obj);
+      }
+    }
+  } else if(change[searchBy.value] === "time") {
+    let timeArray = sortedRunTime(movies);
+    for(const obj of movies) {
+      if(obj["time"] === timeArray[selectOptions.value]) {
+        newArray.push(obj);
+      }
+    }
+  } else if(change[searchBy.value] === "genres") {
+    let genresArray = genre(movies);
+    for(const obj of movies) {
+      if(obj["genres"] === genresArray[selectOptions.value]) {
+        newArray.push(obj);
+      }
+    }
+  } else if(change[searchBy.value] === "release") {
+    let yearsArray = released(movies).sort((a, b) => a - b);
+    for(const obj of movies) {
+      if(obj["release"] === yearsArray[selectOptions.value]) {
+        newArray.push(obj);
+      }
+    }
+  } else if(change[searchBy.value] === "countries") {
+    let countriesArray = country(movies);
+    for(const obj of movies) {
+      if(obj["countries"] === countriesArray[selectOptions.value]) {
+        newArray.push(obj);
+      }
+    }
+  } else if(change[searchBy.value] === "director") {
+    let directorsArray = directorName(movies);
+    for(const obj of movies) {
+      if(obj["director"] === directorsArray[selectOptions.value]) {
+        newArray.push(obj);
+      }
+    }
+  }
+
+  console.log(newArray);
+  console.log(searchBy.value, selectOptions.value);
+
+  setInformations(newArray);
+}, false);
+
