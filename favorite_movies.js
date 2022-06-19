@@ -13,26 +13,6 @@ function runTime(object) {
   }
 };
 
-// release年順に情報を並べ替える
-// function releasedSort(array) {
-// let storedObj = {};
-// let storedArr = [];
-// let backArr = [];
-// for (let i = 0; i < array.length; i++) {
-//   storedObj[`Number${i}`] = [array[i].release, array[i]];
-//   storedArr.push(array[i].release);
-// }
-
-// storedArr.sort((a, b) => a - b);
-// for (let i = 0; i < storedArr.length; i++) {
-//   if (storedArr[i] === storedObj[`Number${i}`][0]) {
-//       backArr.push(storedObj[i][1]);
-//   }
-// }
-// return backArr;
-// }
-
-// console.log(releasedSort(movies));
 
 function title(array) {
   let titleArray = [];
@@ -62,8 +42,10 @@ function country(array) {
   }
 
   let backArray = new Set(countryArray);
+  let returnArray = Array.from(backArray);
+  returnArray.sort();
 
-  return Array.from(backArray);
+  return returnArray;
 }
 
 // console.log(country(movies));
@@ -77,8 +59,9 @@ function directorName(array) {
   }
 
   let directorsArray = new Set(storeArray);
-
-  return Array.from(directorsArray);
+  let returnArray = Array.from(directorsArray);
+  returnArray.sort();
+  return returnArray;
 }
 
 // console.log(directorName(movies));
@@ -132,8 +115,10 @@ function genre(array) {
   // console.log(genresArray);
 
   let backArray = new Set(genresArray);
+  let returnArray = Array.from(backArray);
+  returnArray.sort();
 
-  return Array.from(backArray);
+  return returnArray;
 }
 
 // console.log(genre(movies));

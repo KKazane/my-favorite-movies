@@ -362,7 +362,7 @@ const movies = [
   {
     name: "The Dragon's Demise",
     time: 26,
-    genres: "France",
+    genres: "Drama",
     release: 2015,
     countries: "France",
     director: "Marina Diaby"
