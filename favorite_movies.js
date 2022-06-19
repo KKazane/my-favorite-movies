@@ -1,16 +1,16 @@
 // movieのobjectを引数として渡した時、上映時間が長いか短いかはかる
 function runTime(object) {
-if (object.time) {
-  if (object.time < 60) {
-      return 'short film';
-  } else if (object.time <= 120) {
-      return 'not so long film';
-  } else if (object.time <= 150) {
-      return 'long film';
-  } else {
-    return 'so long film';
+  if (object.time) {
+    if (object.time < 60) {
+        return 'short film';
+    } else if (object.time <= 120) {
+        return 'not so long film';
+    } else if (object.time <= 150) {
+        return 'long film';
+    } else {
+      return 'so long film';
+    }
   }
-}
 };
 
 // release年順に情報を並べ替える
@@ -35,68 +35,68 @@ if (object.time) {
 // console.log(releasedSort(movies));
 
 function title(array) {
-let titleArray = [];
+  let titleArray = [];
 
-for (let i = 0; i < array.length; i++) {
-  titleArray.push(array[i].name);
+  for (let i = 0; i < array.length; i++) {
+    titleArray.push(array[i].name);
+  }
+
+  titleArray.sort();
+
+  return titleArray;
 }
 
-titleArray.sort();
-
-return titleArray;
-}
-
-console.log(title(movies));
+// console.log(title(movies));
 
 function country(array) {
-let countryArray = [];
+  let countryArray = [];
 
-for (let i = 0; i < array.length; i++) {
-  if (Array.isArray(array[i].countries)) {
-      for (let j = 0; j < array[i].countries; j++) {
-          countryArray.push(array[i].countries[j]);
-      }
-  } else {
-      countryArray.push(array[i].countries);
+  for (let i = 0; i < array.length; i++) {
+    if (Array.isArray(array[i].countries)) {
+        for (let j = 0; j < array[i].countries.length; j++) {
+            countryArray.push(array[i].countries[j]);
+        }
+    } else {
+        countryArray.push(array[i].countries);
+    }
   }
+
+  let backArray = new Set(countryArray);
+
+  return Array.from(backArray);
 }
 
-let backArray = new Set(countryArray);
-
-return Array.from(backArray);
-}
-
-console.log(country(movies));
+// console.log(country(movies));
 
 
 function directorName(array) {
-let storeArray = [];
+  let storeArray = [];
 
-for (let i = 0; i < array.length; i++) {
-  storeArray.push(array[i].director);
+  for (let i = 0; i < array.length; i++) {
+    storeArray.push(array[i].director);
+  }
+
+  let directorsArray = new Set(storeArray);
+
+  return Array.from(directorsArray);
 }
 
-let directorsArray = new Set(storeArray);
-
-return Array.from(directorsArray);
-}
-
-console.log(directorName(movies));
+// console.log(directorName(movies));
 
 function released(array) {
-let storeArray = [];
+  let storeArray = [];
 
-for (let i = 0; i < array.length; i++) {
-  storeArray.push(array[i].release);
+  for (let i = 0; i < array.length; i++) {
+    storeArray.push(array[i].release);
+  }
+
+  let backArray = new Set(storeArray);
+
+  return Array.from(backArray);
 }
 
-let backArray = new Set(storeArray);
-
-return Array.from(backArray);
-}
-
-console.log(released(movies));
-console.log(released(movies).sort((a, b) => a - b));
+// console.log(released(movies));
+// console.log(released(movies).sort((a, b) => a - b));
 
 function sortedRelease(array, arrayOfObject) {
   const sortedArray = [];
@@ -115,27 +115,28 @@ function sortedRelease(array, arrayOfObject) {
   return Array.from(backArray);
 }
 
-console.log(sortedRelease(released(movies), movies));
+// console.log(sortedRelease(released(movies), movies));
 
 function genre(array) {
-let genresArray = [];
+  let genresArray = [];
 
-for (let i = 0; i < array.length; i++) {
-  if (Array.isArray(array[i].genres)) {
-      for (let j = 0; j < array[i].genres; j++) {
-          genresArray.push(array[i].genres[j]);
-      }
-  } else {
-      genresArray.push(array[i].genres);
+  for (let i = 0; i < array.length; i++) {
+    if (Array.isArray(array[i].genres)) {
+        for (let j = 0; j < array[i].genres.length; j++) {
+            genresArray.push(array[i].genres[j]);
+        }
+    } else {
+        genresArray.push(array[i].genres);
+    }
   }
+  // console.log(genresArray);
+
+  let backArray = new Set(genresArray);
+
+  return Array.from(backArray);
 }
 
-let backArray = new Set(genresArray);
-
-return Array.from(backArray);
-}
-
-console.log(genre(movies));
+// console.log(genre(movies));
 
 function sortedRunTime(array) {
   const storedArray = [];
@@ -150,7 +151,7 @@ function sortedRunTime(array) {
   return backArray;
 }
 
-console.log(sortedRunTime(movies));
+// console.log(sortedRunTime(movies));
 
 // ページ稼働
 const selected = {
@@ -170,14 +171,16 @@ const submitButton = document.querySelector('.submitButton');
 function setOptions(selectedBy) {
   // const selectOptions = document.querySelector(".select");
   selectOptions.disabled = false;
-
-  selected[selectedBy].forEach((any, index) => {
-    const option = document.createElement('option');
-    option.value = index;
-    option.classList.add('child');
-    option.innerHTML = any;
-    selectOptions.appendChild(option);
-  });
+  
+  if(selectedBy !== "disSelect") {
+    selected[selectedBy].forEach((any, index) => {
+      const option = document.createElement('option');
+      option.value = index;
+      option.classList.add('child');
+      option.innerHTML = any;
+      selectOptions.appendChild(option);
+    });
+  }
 }
 
 searchBy.addEventListener('change', (e) => {
@@ -192,20 +195,6 @@ searchBy.addEventListener('change', (e) => {
 })
 
 function setInformations(array) {
-  // const infoArray = [];
-  // for(let i = 0; i < movies.length; i++) {
-  //   for(const key in movies[i]) {
-  //     if(choosed === movies[i][key]) {
-  //       infoArray.push(movies[i]);
-  //     } else if(Array.isArray(movies[i][key]) && movies[i][key].includes(`${choosed}`)) {
-  //       infoArray.push(movies[i]);
-  //     }
-  //   }
-  // }
-
-  // let simpleArray = new Set(infoArray);
-  // let informationsArray = Array.from(simpleArray); 
-  
   for(let x = 0; x < array.length; x++) {
     const list = document.createElement('li');
     list.value = x;
@@ -283,8 +272,8 @@ submitButton.addEventListener('click', () => {
     }
   }
 
-  console.log(newArray);
-  console.log(searchBy.value, selectOptions.value);
+  // console.log(newArray);
+  // console.log(searchBy.value, selectOptions.value);
 
   setInformations(newArray);
 }, false);
