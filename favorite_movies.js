@@ -41,6 +41,8 @@ for (let i = 0; i < array.length; i++) {
   titleArray.push(array[i].name);
 }
 
+titleArray.sort();
+
 return titleArray;
 }
 
